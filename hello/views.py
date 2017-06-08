@@ -134,8 +134,8 @@ def signup(request):
     else:
         form = UserCreateForm()
 
-    # options = ['banana', 'pineapple', 'cheese']
-    options = getWifiAPs()
+    options = ['banana', 'pineapple', 'cheese']
+    #options = getWifiAPs()
     return render(request,'signup.html', {'form': form,'options': options, 'title':'Sign Up'})
     # return render(request, 'signup.html', {'form': form})
 

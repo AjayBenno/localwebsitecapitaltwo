@@ -1,7 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'layout.html' %}
 
-{% block content %}
-  <h2>Sign up</h2>
+{% block body %}
+  <style>
+    body {
+      height: 120vh !important;
+    }
+  </style>
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -21,6 +25,6 @@
     <option value="option.">{{ option.ssid }}</option>
   {% endfor %}
   </select> -->
-    <button type="submit">Apply</button>
+    <button class="waves-effect waves-light btn" type="submit">Apply</button>
   </form>
 {% endblock %}

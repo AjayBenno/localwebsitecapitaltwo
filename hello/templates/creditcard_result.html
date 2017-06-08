@@ -1,5 +1,22 @@
-{% extends 'base.html' %}
+{% extends 'layout.html' %}
 
-{% block content %}
-  <p>Based on the credit card choices of similar customers, we recommend that you apply for credit card {{ recommendation }}</>
+{% block body %}
+ 	<p>Based on the credit card choices of similar customers, we recommend that you apply for credit card {{ recommendation }}</p>
+
+	{% if recommendation == 1 %}
+		<img src="https://www.capitalone.com/assets/credit-cards/img/6HnMDkRd7iyGGqIkIcuyWA/40abb36171f1955837cc0eb9a75162a0/www-quicksilver-mc-world-elite-generic-240x151.png">
+		<a href="https://applynow.capitalone.com/?productId=947">Apply</a>
+	{% elif recommendation == 2 %}
+		<img src="https://www.capitalone.com/assets/credit-cards/img/4yKPqhJJAIW8gYAyysoqEO/7c6e9a90ddfff65e5bae4d2ac96c09f3/www-blue-steel-mc-worldelite-240x151.png">
+		<a href="https://applynow.capitalone.com/?productId=931">Apply</a>
+	{% elif recommendation == 3 %}
+		<img src="https://www.capitalone.com/assets/credit-cards/img/4Z1QVfKUk8UQ0akwGaEwCe/9b8ebb6441fd5b11ff09d87fe622b58c/www-venture-visa-sig-flat-9-14.png">
+		<a href="https://applynow.capitalone.com/?productId=939">Apply</a>
+	{% elif recommendation == 4 %}
+		<img src="https://www.capitalone.com/assets/credit-cards/img/acl1mmCpgc8KwkKO4c4oO/a2f8793b755ede3a8d8a06f5f4866044/emv-spark-classic-emv-visa-flat-240x151-www.png">
+		<a href="https://applynow.capitalone.com/?productId=973">Apply</a>
+	{% endif %}
+
+
+
 {% endblock %}
