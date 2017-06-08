@@ -1,6 +1,6 @@
-{% extends 'layout.html' %}
+{% extends 'base.html' %}
 
-{% block body %}
+{% block content %}
   <h2>Sign up</h2>
   <form method="post">
     {% csrf_token %}
@@ -16,14 +16,11 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <div class = "input-field col s12">
-    <select name="wifi">
-      <option value="" disable selected> Choose Your Phone Network</option>
-      {% for option in options %}
-      <option value="{{option}}">{{ option }}</option>
-      {% endfor %}
-    </select>
-    </div>
-    <button type="submit">Sign up</button>
+<!--     <select name="wifi">
+    {% for option in options %}
+    <option value="option.">{{ option.ssid }}</option>
+  {% endfor %}
+  </select> -->
+    <button type="submit">Apply</button>
   </form>
 {% endblock %}

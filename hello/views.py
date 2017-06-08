@@ -3,7 +3,8 @@ from django.http import HttpResponse
 import requests
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
+from .forms import CreditCardForm, UserCreateForm
 # from django.contrib.sessions
 from django import forms
 from wifi import Cell, Scheme
@@ -12,7 +13,10 @@ import socket
 import SocketServer
 import threading
 import time
+import json
 from .models import Greeting
+from django.core.mail import send_mail
+from django.http import HttpResponse
 
 option1 = {}
 
@@ -41,11 +45,39 @@ def sendToPhoton(request):
     s.recv(1024)
     s.close()
 
+def sendSimpleEmail(request,emailto):
+   res = send_mail("Review Credit Card Usage", "Hi %s, There was a usage of your credit card without a connection to your phone. Please review this transaction, and if this was not your purchase, contact your credit card company to cancel the transaction." % (request.session['firstname']), "sealteam6capitaltwo@gmail.com", [emailto], fail_silently=False)
+   return HttpResponse('%s'%res)
 
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html', {'title':'Capital Two'})
+
+def creditcardform(request):
+	if request.method == 'POST':
+		form = CreditCardForm(request.POST)
+		if form.is_valid():
+			age = str(form.cleaned_data.get('age'))
+			income = str(form.cleaned_data.get('income'))
+			costofliving= str(form.cleaned_data.get('costofliving'))
+			numberdependents = str(form.cleaned_data.get('numberdependents'))
+			spending = str(form.cleaned_data.get('spending'))
+			creditscore = str(form.cleaned_data.get('creditscore'))
+			delinquency = str(form.cleaned_data.get('delinquency'))
+			maritalstatus = str(form.cleaned_data.get('maritalstatus'))
+			res = {'age': age, 'income': income, 'cost_of_living': costofliving, 'dependents': numberdependents, 'spending/month': spending, 'credit_score': creditscore, 'delinquency': delinquency, 'marital_status': maritalstatus}
+			print res
+			headers = {'Content-type': 'application/json'}
+			r = requests.post('https://carbonserver.herokuapp.com/new_card', data=json.dumps(res), headers = headers)
+			print r.text
+			sys.stdout.flush()
+			recommendation = r.recommendation
+			return HttpResponse('%s' % recommendation)
+			return render(request, 'creditcard_result.html')
+	else:
+		form = CreditCardForm()
+		return render(request, 'creditcard_form.html', {'form': form})
 
 def buy(request):
     if request.method == 'POST':
@@ -66,33 +98,45 @@ def buy(request):
 
     return render(request,'purchase.html', {'title':'Amazebay'})
 
-def login(request): 
+
+def login(request):
     return render(request, 'login.html',{'items':listOfNotifis, 'title':'Login'})
+
 
 def signup(request):
     global option1
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserCreateForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
+            firstname=form.cleaned_data.get('firstname')
+            lastname=form.cleaned_data.get('lastname')
+            email=form.cleaned_data.get('email')
+            cardnumber=form.cleaned_data.get('cardnumber')
+            phone=form.cleaned_data.get('phone')
             user = authenticate(username=username, password=raw_password)
             if user is not None:
             	auth_login(request, user)
-                request.session['user'] = username
+                request.session['firstname'] = firstname
+                request.session['email'] = email
                 request.session['wifi'] = option1[request.POST['wifi']]
-                print request.session['wifi']
+                res = {'first_name':firstname,'last_name':lastname,'phone':phone,'wifi_address':option1[request.POST['wifi']],'card_number':cardnumber,'email':email}
+                headers = {'Content-type': 'application/json'}
+                r = requests.post('https://carbonserver.herokuapp.com/accounts', data=json.dumps(res), headers = headers)
+                print r.text
                 sys.stdout.flush()
                 sendToPhoton(request)
             	return render(request, 'index.html')
     else:
-        form = UserCreationForm()
+        form = UserCreateForm()
+
     options = getWifiAPs()
     return render(request,'signup.html', {'form': form,'options': options, 'title':'Sign Up'})
     # return render(request, 'signup.html', {'form': form})
 
-def profile(request): 
+def profile(request):
 	return render(request, 'index.html', {'title':'Capital Two Profile'})
 
 
@@ -104,4 +148,3 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, 'db.html', {'greetings': greetings, 'title':"DB"})
-

@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^signup/$', hello.views.signup, name='signup'),
     url(r'^buy/$', hello.views.buy, name='buy'),
     url(r'^profile/$', hello.views.profile, name='profile'),
+    url(r'^creditcardform/$', hello.views.creditcardform, name='creditcardform'),
     url(r'^db', hello.views.db, name='db'),
     url(r'^admin/', include(admin.site.urls)),
 ]
