@@ -70,15 +70,16 @@ def creditcardform(request):
 			res = {'age': age, 'income': income, 'cost_of_living': costofliving, 'dependents': numberdependents, 'spending/month': spending, 'credit_score': creditscore, 'delinquency': delinquency, 'marital_status': maritalstatus}
 			headers = {'Content-type': 'application/json'}
 			r = requests.post('https://carbonserver.herokuapp.com/new_card', data=json.dumps(res), headers = headers)
-			print r.text
+			#print r.text
 			get = requests.get('https://carbonserver.herokuapp.com/recommended_card')
-			print get.status_code
-			if get.status_code == requests.codes.ok:
-				res = get.json().get('recommended')
-			return render(request, 'creditcard_result.html', {'recommendation': res})
+			#print get.status_code
+			#print get.text
+			res = get.json().get('recommended')
+			sys.stdout.flush()
+			return render(request, 'creditcard_result.html', {'recommendation': res, 'title': 'Card Recommendation'})
 	else:
 		form = CreditCardForm()
-		return render(request, 'creditcard_form.html', {'form': form})
+		return render(request, 'creditcard_form.html', {'form': form, 'title': 'Apply for Card'})
 
 def buy(request):
     if request.method == 'POST':

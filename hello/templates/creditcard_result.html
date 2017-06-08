@@ -1,14 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block body %}
- 	<p>Based on the credit card choices of similar customers, we recommend that you apply for credit card {{ recommendation }}</p>
-
- 	<div class="row">
-        <div class="col s12 m7">
+ 	<div class="row" style="width: 100%;">
+        <div class="col s12 offset-m3 m6">
           <div class="card">
           	{% if recommendation == 1 %}
 	            <div class="card-image">
-	              <img src="https://www.capitalone.com/assets/credit-cards/img/6HnMDkRd7iyGGqIkIcuyWA/40abb36171f1955837cc0eb9a75162a0/www-quicksilver-mc-world-elite-generic-240x151.png">
+	              <img src="https://www.capitalone.com/assets/credit-cards/img/6HnMDkRd7iyGGqIkIcuyWA/40abb36171f1955837cc0eb9a75162a0/www-quicksilver-mc-world-elite-generic-240x151.png" width="650px">
 	              <span class="card-title">Quicksilver</span>
 	            </div>
 	            <div class="card-action">
@@ -16,7 +14,7 @@
 	            </div>
 	        {% elif recommendation == 2 %}
 	        	<div class="card-image">
-	              <img src="https://www.capitalone.com/assets/credit-cards/img/4yKPqhJJAIW8gYAyysoqEO/7c6e9a90ddfff65e5bae4d2ac96c09f3/www-blue-steel-mc-worldelite-240x151.png">
+	              <img src="https://www.capitalone.com/assets/credit-cards/img/4yKPqhJJAIW8gYAyysoqEO/7c6e9a90ddfff65e5bae4d2ac96c09f3/www-blue-steel-mc-worldelite-240x151.png" width="650px">
 	              <span class="card-title">World Elite</span>
 	            </div>
 	            <div class="card-action">
@@ -24,7 +22,7 @@
 	            </div>
 			{% elif recommendation == 3 %}
 				<div class="card-image">
-	              <img src="https://www.capitalone.com/assets/credit-cards/img/4Z1QVfKUk8UQ0akwGaEwCe/9b8ebb6441fd5b11ff09d87fe622b58c/www-venture-visa-sig-flat-9-14.png">
+	              <img src="https://www.capitalone.com/assets/credit-cards/img/4Z1QVfKUk8UQ0akwGaEwCe/9b8ebb6441fd5b11ff09d87fe622b58c/www-venture-visa-sig-flat-9-14.png" width="650px">
 	              <span class="card-title">Venture</span>
 	            </div>
 	            <div class="card-action">
@@ -32,7 +30,7 @@
 	            </div>
 			{% elif recommendation == 4 %}
 				<div class="card-image">
-	              <img src="https://www.capitalone.com/assets/credit-cards/img/acl1mmCpgc8KwkKO4c4oO/a2f8793b755ede3a8d8a06f5f4866044/emv-spark-classic-emv-visa-flat-240x151-www.png">
+	              <img src="https://www.capitalone.com/assets/credit-cards/img/acl1mmCpgc8KwkKO4c4oO/a2f8793b755ede3a8d8a06f5f4866044/emv-spark-classic-emv-visa-flat-240x151-www.png" width="650px">
 	              <span class="card-title">Spark Card</span>
 	            </div>
 	            <div class="card-action">
