@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,10 +10,11 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
 	</head>
-	<body style="height: 90vh; width: 100vw;">
+	<body style="height: 88vh; width: 100vw;">
 		<nav class="grey darken-3"> 
 			<div class="nav-wrapper">
-				<a href="/" class="brand-logo center grey-text text-lighten-5" style="font-weight: 600;">Amazebay</a>
+				<img src="{% static "Capital_Two.png" %}" class="brand-logo" style="max-height: 64px;">
+				<a href="/" class="brand-logo center grey-text text-lighten-5" style="font-weight: 600;">{{ title }}</a>
 			</div>
 		</nav>
 		<div class="container valign-wrapper" style="height: 100%;">

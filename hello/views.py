@@ -41,7 +41,7 @@ def sendToPhoton(request):
 # Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
-    return render(request, 'index.html')
+    return render(request, 'index.html', {'title':'Capital Two'})
 
 def buy(request):
     if request.method == 'POST':
@@ -58,12 +58,12 @@ def buy(request):
             print now
             sys.stdout.flush()
             fail = True
-        return render(request,'buy.html',{'fail':fail})
+        return render(request,'buy.html',{'fail':fail, 'title':'Amazebay'})
 
-    return render(request,'purchase.html')
+    return render(request,'purchase.html', {'title':'Amazebay'})
 
 def login(request): 
-    return render(request, 'login.html',{'items':listOfNotifis})
+    return render(request, 'login.html',{'items':listOfNotifis, 'title':'Login'})
 
 def signup(request):
     if request.method == 'POST':
@@ -83,11 +83,11 @@ def signup(request):
             	return render(request, 'index.html')
     else:
         form = UserCreationForm()
-    return render(request,'signup.html', {'form': form,'options': options})
+    return render(request,'signup.html', {'form': form,'options': options, 'title':'Sign Up'})
     # return render(request, 'signup.html', {'form': form})
 
 def profile(request): 
-	return render(request, 'index.html')
+	return render(request, 'index.html', {'title':'Capital Two Profile'})
 
 
 def db(request):
@@ -97,5 +97,5 @@ def db(request):
 
     greetings = Greeting.objects.all()
 
-    return render(request, 'db.html', {'greetings': greetings})
+    return render(request, 'db.html', {'greetings': greetings, 'title':"DB"})
 
