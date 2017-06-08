@@ -14,19 +14,22 @@ import threading
 import time
 from .models import Greeting
 
-# option = Cell.all('wlan0')
-# option1 = {}
-# for o in option:
-#     option1[o.ssid] = o.address
-# option2= map(lambda x : x.ssid,option)
-# options = set(option2)
+option1 = {}
 
+def getWifiAPs():
+    global option1
+    option = Cell.all('wlan0')
+    for o in option:
+        option1[o.ssid] = o.address
+    option2= map(lambda x : x.ssid,option)
+    options = set(option2)
+    return options
 listOfNotifis=[]
 
 TCP_IP = '192.168.20.197'
 TCP_PORT = 30
-# MYHOST='192.168.18.214'
-# MYPORT=40
+
+
 def sendToPhoton(request):
     currentString = request.session.get('wifi')
     data1 = currentString.replace(":","")
@@ -35,6 +38,7 @@ def sendToPhoton(request):
     s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     s.connect((TCP_IP,TCP_PORT))
     s.send(message)
+    s.recv(1024)
     s.close()
 
 
@@ -66,6 +70,7 @@ def login(request):
     return render(request, 'login.html',{'items':listOfNotifis})
 
 def signup(request):
+    global option1
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -83,6 +88,8 @@ def signup(request):
             	return render(request, 'index.html')
     else:
         form = UserCreationForm()
+
+    options = getWifiAPs()
     return render(request,'signup.html', {'form': form,'options': options})
     # return render(request, 'signup.html', {'form': form})
 
