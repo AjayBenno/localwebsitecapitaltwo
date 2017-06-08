@@ -1,11 +1,15 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-  <h2>Sign up</h2>
+  <style>
+    body {
+      height: 120vh !important;
+    }
+  </style>
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
-      <p>
+      <div class="input-field">
         {{ field.label_tag }}<br>
         {{ field }}
         {% if field.help_text %}
@@ -14,16 +18,18 @@
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
-      </p>
+      </div>
     {% endfor %}
-    <div class = "input-field col s12">
-    <select name="wifi">
-      <option value="" disable selected> Choose Your Phone Network</option>
-      {% for option in options %}
-      <option value="{{option}}">{{ option }}</option>
-      {% endfor %}
-    </select>
+    <div class="input-field col s12">
+      <select name="wifi" class="browser-default">
+        <option value="" disable selected> Choose Your Phone Network</option>
+        {% for option in options %}
+        <option value="{{option}}">{{ option }}</option>
+        {% endfor %}
+      </select>
     </div>
-    <button type="submit">Sign up</button>
+    <div class="input-field">
+      <button type="submit" class="waves-effect waves-light btn">Sign up</button>
+    </div>
   </form>
 {% endblock %}

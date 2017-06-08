@@ -2,7 +2,16 @@
 {% load staticfiles %}
 
 {% block body %}
-
-<a href="{% url 'signup' %}">Signup</a>
-<a href="{% url 'login' %}">Login</a>
+<div class="row" style="width: 100%">
+	<div class="card col s5">
+		<div class="card-content">
+			<a class="waves-effect waves-light btn" href="{% url 'signup' %}">Signup</a>
+		</div>
+	</div>
+	<div class="card col offset-s1 s5">
+		<div class="card-content">
+			<a class="waves-effect waves-light btn" href="{% url 'buy' %}">Buy Product</a>
+		</div>
+	</div>
+</div>
 {% endblock %}
