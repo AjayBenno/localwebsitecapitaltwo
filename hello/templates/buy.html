@@ -1,11 +1,14 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
+{% block body %}
 
-{% block content %}
-<h1> BUY AN ITEM </h1>
-
-<form action="" method="post">
-    {% csrf_token %}
-  <input type="submit" value="OK">
-</form>
+<div class="row" style="width: 100%;">
+  <div class="col s12 offset-m4 m6">
+    {% if fail %}	
+    	Transaction Failed
+    {% else %}
+    	<img src="{{url_for('static', filename='success2.gif')}}" />
+    {% endif %}
+  </div>
+</div>
 
 {% endblock %}

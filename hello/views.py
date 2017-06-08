@@ -51,14 +51,16 @@ def buy(request):
         s.send(Message)
         date =s.recv(1024)
         s.close()
+        fail = False
         if date == 'n': #TODO INSERT DJANGO MAIL FUNCTION HERE BC BAD SHIT
             now = time.strftime("%c")
             listOfNotifis.append(now)
             print now
             sys.stdout.flush()
-        return render(request,'login.html',{'items':listOfNotifis})
+            fail = True
+        return render(request,'buy.html',{'fail':fail})
 
-    return render(request,'buy.html')
+    return render(request,'purchase.html')
 
 def login(request): 
     return render(request, 'login.html',{'items':listOfNotifis})

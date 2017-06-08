@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row">
+    <div class="col s12 offset-m3 m6">
+      <div class="card">
+        <div class="card-image">
+          <img src="static/watch.jpeg">
+          <span class="card-title">Apple Watch 2</span>
+          <form action="\buy" method="post">
+            {% csrf_token %}
+            <input type="submit" value="OK" class="btn-floating halfway-fab btn-large waves-effect waves-darken-5 indigo"><i class="material-icons">shopping_cart</i>
+        </div>
+        <div class="card-content pink-lighten-5">
+          <p>Built-in GPS. Water resistance to 50 meters.1 A lightning-fast dual‑core processor. And a display that’s two times brighter than before. Full of features that help you stay active, motivated, and connected, Apple Watch Series 2 is the perfect partner for a healthy life.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
