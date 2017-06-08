@@ -14,12 +14,12 @@ import threading
 import time
 from .models import Greeting
 
-option = Cell.all('wlan0')
-option1 = {}
-for o in option:
-    option1[o.ssid] = o.address
-option2= map(lambda x : x.ssid,option)
-options = set(option2)
+# option = Cell.all('wlan0')
+# option1 = {}
+# for o in option:
+#     option1[o.ssid] = o.address
+# option2= map(lambda x : x.ssid,option)
+# options = set(option2)
 
 listOfNotifis=[]
 

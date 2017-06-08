@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
+{% load static %}
 
 <div class="row" style="width: 100%;">
   <div class="col s12 offset-m4 m6">
     {% if fail %}	
     	Transaction Failed
     {% else %}
-    	<img src="{{url_for('static', filename='success2.gif')}}" />
+    	<img src="{% static success2.gif %}" />
     {% endif %}
   </div>
 </div>
