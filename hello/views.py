@@ -46,8 +46,9 @@ def sendToPhoton(request):
     s.close()
 
 def sendSimpleEmail(request,emailto):
-   res = send_mail("Review Credit Card Usage", "Hi %s, There was a usage of your credit card without a connection to your phone. Please review this transaction, and if this was not your purchase, contact your credit card company to cancel the transaction." % (request.session['firstname']), "sealteam6capitaltwo@gmail.com", [emailto], fail_silently=False)
-   return HttpResponse('%s'%res)
+    now = time.strftime("%c")
+    res = send_mail("Review Credit Card Usage", "Hi %s, There was a usage of your credit card without a connection to your phone at time %s. Please review this transaction, and if this was not your purchase, contact your credit card company to cancel the transaction." % (request.session['firstname'],now), "sealteam6capitaltwo@gmail.com", [emailto], fail_silently=False)
+    return HttpResponse('%s'%res)
 
 # Create your views here.
 def index(request):
@@ -67,14 +68,14 @@ def creditcardform(request):
 			delinquency = str(form.cleaned_data.get('delinquency'))
 			maritalstatus = str(form.cleaned_data.get('maritalstatus'))
 			res = {'age': age, 'income': income, 'cost_of_living': costofliving, 'dependents': numberdependents, 'spending/month': spending, 'credit_score': creditscore, 'delinquency': delinquency, 'marital_status': maritalstatus}
-			print res
 			headers = {'Content-type': 'application/json'}
 			r = requests.post('https://carbonserver.herokuapp.com/new_card', data=json.dumps(res), headers = headers)
 			print r.text
-			sys.stdout.flush()
-			recommendation = r.recommendation
-			return HttpResponse('%s' % recommendation)
-			return render(request, 'creditcard_result.html')
+			get = requests.get('https://carbonserver.herokuapp.com/recommended_card')
+			print get.status_code
+			if get.status_code == requests.codes.ok:
+				res = get.json().get('recommended')
+			return render(request, 'creditcard_result.html', {'recommendation': res})
 	else:
 		form = CreditCardForm()
 		return render(request, 'creditcard_form.html', {'form': form})
@@ -92,6 +93,7 @@ def buy(request):
             now = time.strftime("%c")
             listOfNotifis.append(now)
             print now
+            sendSimpleEmail(request,request.session['email'])
             sys.stdout.flush()
             fail = True
         return render(request,'buy.html',{'fail':fail, 'title':'Amazebay'})
@@ -132,8 +134,8 @@ def signup(request):
     else:
         form = UserCreateForm()
 
-    options = ['banana', 'pineapple', 'cheese']
-    #options = getWifiAPs()
+    # options = ['banana', 'pineapple', 'cheese']
+    options = getWifiAPs()
     return render(request,'signup.html', {'form': form,'options': options, 'title':'Sign Up'})
     # return render(request, 'signup.html', {'form': form})
 
